@@ -32,8 +32,8 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-        // mQueue = new ArrayIntQueue();
+        // mQueue = new LinkedIntQueue();
+        mQueue = new ArrayIntQueue();
     }
 
     @Test
@@ -60,12 +60,41 @@ public class IntQueueTest {
                 mQueue.enqueue(input);
             }
 
+
             // Used boxed type to pacify assertEquals overload resolution
             for (Integer result : correctResult) {
+                assertEquals(mQueue.peek(), result);
                 assertEquals(mQueue.dequeue(), result);
             }
         }
     }
 
+    @Test
+    public void testSize() {
+        mQueue.enqueue(1);
+        mQueue.enqueue(2);
+        mQueue.enqueue(3);
+        assertEquals(3, mQueue.size());
+    }
+
+    @Test
+    public void testClear() {
+        mQueue.clear();
+        assertTrue(mQueue.isEmpty());
+    }
+
+    @Test
+    public void testEmptyDequq() {
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
+    public void testEnsureCapacity() {
+        int newSize = 100;
+        for (int i = 0; i < newSize; i++) {
+            mQueue.enqueue(i);
+        }
+        assertEquals(newSize, mQueue.size());
+    }
 
 }
